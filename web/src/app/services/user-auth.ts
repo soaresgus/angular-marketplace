@@ -5,7 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class UserAuthService {
   getUserToken() {
-    // TODO: Implementar a logica de puxar o token do localStorage
-    return 'tokeninvalido'
+    return localStorage.getItem('auth-token') || null;
+  }
+
+  setUserToken(token: string) {
+    localStorage.setItem('auth-token', token);
   }
 }
