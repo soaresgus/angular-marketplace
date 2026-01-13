@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../../services/user';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class Login {
     const email = this.userForm.get('email')?.value as string;
     const password = this.userForm.get('password')?.value as string;
 
-    this._userService.login(email, password).subscribe({
+    this._userService.login(email, password).pipe(take(1)).subscribe({
       next: (response) => {
         this.loginErrorMessage = ''
         this._userAuthService.setUserToken(response.data.token)
