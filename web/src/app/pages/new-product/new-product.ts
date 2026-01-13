@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductsService } from '../../services/products';
 import { INewProductRequest } from '../../interfaces/new-product-request';
 import { take } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-product',
@@ -21,6 +22,7 @@ export class NewProduct {
   })
 
   private readonly _productsService = new ProductsService();
+  private readonly _router = inject(Router);
 
   saveProduct() {
     if(this.productForm.invalid || !this.productImageBase64) {
@@ -40,6 +42,10 @@ export class NewProduct {
         this.successMessage = response.message;
       }
     })
+  }
+
+  cancel() {
+    this._router.navigate(['/products']);
   }
 
   onFileSelected(event: Event) {
